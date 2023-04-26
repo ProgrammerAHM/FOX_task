@@ -97,7 +97,7 @@ function copyfiles(value) {
 function copyallfiles(value) {
     var list = ""
     value.forEach((e)=>{
-        list+=e.name+"\n"
+        list+=e.url+"\n"
     })
     navigator.clipboard.writeText(list);
   }
