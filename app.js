@@ -32,7 +32,7 @@ app.get("/login", async (req, res) => {
 });
 
 app.get("/file", async (req, res) => {
-    res.sendfile((__dirname + '/imgs.html'));
+  res.sendfile((__dirname + '/imgs.html'));
 });
 
 app.get("/", async (req, res) => {
@@ -43,7 +43,6 @@ app.get("/", async (req, res) => {
 app.get("/api/v1/folders", async (req, res) => {
   try {
     const { cookie } = req.headers;
-    console.log(cookie)
     const { data } = await axios.get(
       `${imageKitBaseUrl}/files?searchQuery=type%3D%22folder%22`,
       headers(cookie)
@@ -51,7 +50,22 @@ app.get("/api/v1/folders", async (req, res) => {
     const filteredResponse = data.map(({ name }) => ({ name }));
     res.json(filteredResponse);
   } catch (error) {
-    
+    console.log(error)
+    handleErrors(res, error);
+  }
+});
+
+app.get("/api/v1/allfile", async (req, res) => {
+  try {
+    const { cookie } = req.headers;
+    var {data} = await axios.get(
+      `${imageKitBaseUrl}/files?searchQuery=type%3D%22file%22`,
+      headers(cookie)
+    );
+    const filteredResponse = data.map(({ name }) => ({ name }));
+    res.json(filteredResponse);
+  } catch (error) {
+    console.log(error)
     handleErrors(res, error);
   }
 });
@@ -76,9 +90,8 @@ app.get("/api/v1/files", async (req, res) => {
 
 app.post("/api/v1/cookie", (req, res) => {
   const { value } = req.body;
-  console.log(value)
   res.cookie("connect.sid", value);
-    res.json("OK");
+  res.json("OK");
 });
 
 app.listen(port, () => {
