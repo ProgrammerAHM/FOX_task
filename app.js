@@ -62,7 +62,7 @@ app.get("/api/v1/allfile", async (req, res) => {
       `${imageKitBaseUrl}/files?searchQuery=type%3D%22file%22`,
       headers(cookie)
     );
-    const filteredResponse = data.map(({ name }) => ({ name }));
+    const filteredResponse = data.map(({ url }) => ({ url }));
     res.json(filteredResponse);
   } catch (error) {
     console.log(error)
